@@ -1,5 +1,7 @@
+using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Requirements.Data;
+using Requirements.Data.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,14 +10,25 @@ builder.Services.AddDbContext<RequirementContext>(
     options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Requirements;Trusted_Connection=True;"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddFluentMigratorCore()
+    .ConfigureRunner(rb => rb
+    .AddSqlServer()
+    .WithGlobalConnectionString(builder.Configuration.GetConnectionString("Requirements"))
+    .ScanIn(typeof(Migrations).Assembly).For.Migrations());
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+    runner.MigrateUp();
 }
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
 
 app.UseHttpsRedirection();
 
@@ -24,3 +37,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+}

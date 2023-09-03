@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Requirements.Models;
 
 namespace Requirements.Data
 {
@@ -14,6 +15,6 @@ namespace Requirements.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<AddressInDatabase> Address { get; set; }
+        public DbSet<Address> Address { get; set; }
     }
 }

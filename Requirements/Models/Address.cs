@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Requirements.Models
+﻿namespace Requirements.Models
 {
     public class Address
     {
@@ -14,7 +12,7 @@ namespace Requirements.Models
             AddressType addressType)
         {
             Neighborhood = neighborhood;
-            AdressLineTwo = addressLineTwo;
+            AddressLineTwo = addressLineTwo;
             Number = number;
             ZipCode = zipCode;
             City = city;
@@ -22,13 +20,13 @@ namespace Requirements.Models
             AddressType = addressType;
         }
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string Neighborhood { get; private set; }
-        public string AdressLineTwo { get; private set; }
+        public string AddressLineTwo { get; private set; }
         public string Number { get; private set; }
         public string ZipCode { get; private set; }
         public string City { get; private set; }
         public string State { get; private set; }
-        public AddressType AddressType { get; set; }
+        public AddressType AddressType { get; private set; }
     }
 }

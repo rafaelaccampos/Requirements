@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Requirements.Models;
 
 namespace Requirements.Data
 {
-    public class AddressMap : IEntityTypeConfiguration<AddressInDatabase>
+    public class AddressMap : IEntityTypeConfiguration<Address>
     {
-        public void Configure(EntityTypeBuilder<AddressInDatabase> builder)
+        public void Configure(EntityTypeBuilder<Address> builder)
         {
             builder
                 .ToTable("address")
@@ -36,6 +37,7 @@ namespace Requirements.Data
                 .IsRequired();
             
             builder.Property(a => a.ZipCode)
+                .HasColumnName("zip_code")
                 .IsRequired();
         }
     }
