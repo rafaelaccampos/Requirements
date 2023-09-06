@@ -21,6 +21,7 @@ namespace Requirements.IntegrationTests.Fixtures
         {
             var configuration = (IConfigurationRoot)_customWebApplicationFactory.Services.GetService(typeof(IConfiguration))!;
             var connectionString = configuration.GetConnectionString("Requirements");
+            await DatabaseSetup.Reset(connectionString!);
         }
 
         public T GetService<T>() where T : class
