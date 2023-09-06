@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Requirements.Data;
 
 namespace Requirements.IntegrationTests.Fixtures
@@ -14,6 +15,12 @@ namespace Requirements.IntegrationTests.Fixtures
             _customWebApplicationFactory = new CustomWebApplicationFactory();
             _scope = _customWebApplicationFactory.Services.CreateScope();
             _context = _customWebApplicationFactory.Services.CreateScope().ServiceProvider.GetService<RequirementContext>()!;
+        }
+
+        public async Task EraseData()
+        {
+            var configuration = (IConfigurationRoot)_customWebApplicationFactory.Services.GetService(typeof(IConfiguration))!;
+            var connectionString = configuration.GetConnectionString("Requirements");
         }
 
         public T GetService<T>() where T : class

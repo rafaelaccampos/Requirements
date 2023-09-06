@@ -5,7 +5,7 @@ using Requirements.IntegrationTests.Fixtures;
 namespace Requirements.IntegrationTests.Setup
 {
     [Collection(nameof(DatabaseCollection))]
-    public class RepositoryTestBase
+    public class RepositoryTestBase : IAsyncLifetime
     {
         private readonly DatabaseFixture _databaseFixture;
 
@@ -16,5 +16,15 @@ namespace Requirements.IntegrationTests.Setup
         }
 
         protected RequirementContext RequirementContext { get; }
+
+        public async Task InitializeAsync()
+        {
+            await _databaseFixture.EraseData();
+        }
+
+        public async Task DisposeAsync()
+        {
+            await RequirementContext.DisposeAsync();
+        }
     }
 }
