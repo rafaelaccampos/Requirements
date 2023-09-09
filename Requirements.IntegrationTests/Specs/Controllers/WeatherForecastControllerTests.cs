@@ -1,6 +1,5 @@
 ﻿using Requirements.IntegrationTests.Fixtures;
 using System.Net.Http.Json;
-using System.Net.WebSockets;
 
 namespace Requirements.IntegrationTests.Specs.Controllers
 {
@@ -17,7 +16,7 @@ namespace Requirements.IntegrationTests.Specs.Controllers
         {
             var response = await Client.GetFromJsonAsync<WeatherForecast[]>("weatherForecast");
 
-            Assert.Equal(5, response.Count());
+            Assert.Equal(5, response!.Length);
         }
     }
 }

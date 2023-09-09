@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<RequirementContext>(
-    options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Requirements;Trusted_Connection=True;"));
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("Requirements")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddFluentMigratorCore()
